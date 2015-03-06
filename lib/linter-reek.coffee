@@ -1,33 +1,38 @@
-LinterReekView = require './linter-reek-view'
-{CompositeDisposable} = require 'atom'
+linterPath = atom.packages.getLoadedPackage("linter").path
+Linter = require "#{linterPath}/lib/linter"
+findFile = require "#{linterPath}/lib/util"
 
-module.exports = LinterReek =
-  linterReekView: null
-  modalPanel: null
-  subscriptions: null
+class LinterReek extends Linter
+  # The syntax that the linter handles. May be a string or
+  # list/tuple of strings. Names should be all lowercase.
+  @syntax: ['source.ruby', 'source.ruby.rails', 'source.ruby.rspec']
 
-  activate: (state) ->
-    @linterReekView = new LinterReekView(state.linterReekViewState)
-    @modalPanel = atom.workspace.addModalPanel(item: @linterReekView.getElement(), visible: false)
+  # A string, list, tuple or callable that returns a string, list or tuple,
+  # containing the command line (with arguments) used to lint.
+  cmd: 'rubocop --format emacs'
 
-    # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
-    @subscriptions = new CompositeDisposable
+  linterName: 'reek'
 
-    # Register command that toggles this view
-    @subscriptions.add atom.commands.add 'atom-workspace', 'linter-reek:toggle': => @toggle()
+  # A regex pattern used to extract information from the executable's output.
+  regex:
+    '.+?:(?<line>\\d+):(?<col>\\d+): ' +
+    '((?<warning>[RCW])|(?<error>[EF])): ' +
+    '(?<message>.+)'
 
-  deactivate: ->
-    @modalPanel.destroy()
-    @subscriptions.dispose()
-    @linterReekView.destroy()
+  constructor: (editor)->
+    super(editor)
 
-  serialize: ->
-    linterReekViewState: @linterReekView.serialize()
+    if editor.getGrammar().scopeName == 'source.ruby.rails'
+      @cmd += " -R"
 
-  toggle: ->
-    console.log 'LinterReek was toggled!'
+    config = findFile(@cwd, '.rubocop.yml')
+    if config
+      @cmd += " --config #{config}"
 
-    if @modalPanel.isVisible()
-      @modalPanel.hide()
-    else
-      @modalPanel.show()
+    atom.config.observe 'linter-rubocop.rubocopExecutablePath', =>
+      @executablePath = atom.config.get 'linter-rubocop.rubocopExecutablePath'
+
+  destroy: ->
+    atom.config.unobserve 'linter-rubocop.rubocopExecutablePath'
+
+module.exports = LinterRubocop
