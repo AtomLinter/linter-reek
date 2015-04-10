@@ -3,7 +3,7 @@
   "linter-package": true,
   "activationEvents": [],
   "main": "./lib/init",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Find code smells in your Ruby projects with Reek",
   "repository": "https://github.com/dhagerty9009/linter-reek",
   "license": "MIT",
