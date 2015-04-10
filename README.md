@@ -1,7 +1,7 @@
 linter-reek
 =========================
 
-This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [rubocop](https://github.com/bbatsov/rubocop). It will be used with files that have the “Ruby” syntax.
+This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [Reek](https://github.com/troessner/reek). It will be used with files that have the “Ruby” syntax.
 
 ## Installation
 Linter package must be installed in order to use this plugin. If Linter is not installed, please follow the instructions [here](https://github.com/AtomLinter/Linter).
@@ -11,7 +11,7 @@ Before using this plugin, you must ensure that `reek` is installed on your syste
 
 1. Install [ruby](https://www.ruby-lang.org/).
 
-2. Install [rubocop](https://github.com/bbatsov/rubocop) by typing the following in a terminal:
+2. Install [Reek](https://github.com/troessner/reek) by typing the following in a terminal:
    ```
    gem install reek
    ```
