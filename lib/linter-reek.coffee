@@ -9,7 +9,7 @@ class LinterReek extends Linter
 
   # A string, list, tuple or callable that returns a string, list or tuple,
   # containing the command line (with arguments) used to lint.
-  cmd: 'rubocop --format emacs'
+  cmd: 'reek -y'
 
   linterName: 'reek'
 
@@ -22,17 +22,14 @@ class LinterReek extends Linter
   constructor: (editor)->
     super(editor)
 
-    if editor.getGrammar().scopeName == 'source.ruby.rails'
-      @cmd += " -R"
-
-    config = findFile(@cwd, '.rubocop.yml')
+    config = findFile(@cwd, 'config.reek')
     if config
-      @cmd += " --config #{config}"
+      @cmd += " -c #{config}"
 
-    atom.config.observe 'linter-rubocop.rubocopExecutablePath', =>
-      @executablePath = atom.config.get 'linter-rubocop.rubocopExecutablePath'
+    atom.config.observe 'linter-reek.reekExecutablePath', =>
+      @executablePath = atom.config.get 'linter-reek.reekExecutablePath'
 
   destroy: ->
-    atom.config.unobserve 'linter-rubocop.rubocopExecutablePath'
+    atom.config.unobserve 'linter-reek.reekExecutablePath'
 
-module.exports = LinterRubocop
+module.exports = LinterReek
