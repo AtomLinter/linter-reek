@@ -1,3 +1,6 @@
+## 1.1.1
+* The settings view actually works now. Hooray!
+
 ## 1.1.0
 * You can now specify a path to a specific version of Reek!
 * Some minor edits to the README to help explain how to use this plugin.
