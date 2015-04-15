@@ -1,8 +1,6 @@
-path = require 'path'
-
 module.exports =
   configDefaults:
-    reekExecutablePath: null
+    reekExecutablePath: ''
 
   activate: ->
     console.log 'activate linter-reek'

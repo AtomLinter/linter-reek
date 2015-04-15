@@ -29,12 +29,13 @@ You can configure linter-reek by editing ~/.atom/config.cson (choose Open Your C
 #### reekExecutablePath
 ```
 'linter-reek':
-  'reekExecutablePath': null # reek path.
+  'reekExecutablePath': /path/to/your/reek/here
 ```
-Run `which reek` to find the path,
-if you using rbenv run `rbenv which reek`
+Run `which reek` to find the path (if you using rbenv run `rbenv which reek`).
 
-**Note**: This plugin finds the nearest .reek.yml file and uses the --config command line argument to use that file, so you may not use the --config argument in the linter settings.
+**Note**: This plugin finds the nearest config.reek file and uses the -c command
+line argument to use that file, so you may not use the -c argument
+in the linter settings.
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:

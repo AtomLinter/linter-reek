@@ -1,6 +1,11 @@
-## 1.0.0 - First Release
-* Every feature added
-* This thing works!
+## 1.1.0
+* You can now specify a path to a specific version of Reek!
+* Some minor edits to the README to help explain how to use this plugin.
+* Got rid of specs because testing can rot in some really horrid place.
 
 ## 1.0.1
 * The donation button is up! Free beer pls?
+
+## 1.0.0 - First Release
+* Every feature added
+* This thing works!
