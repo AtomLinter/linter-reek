@@ -1,3 +1,7 @@
+## 1.1.3
+* Closed issue \#4
+* Fully fixed all deprecated calls.
+
 ## 1.1.2
 * Closed issues \#2 and \#3
 * No more deprecated commands used.
