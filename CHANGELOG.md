@@ -1,3 +1,6 @@
+## 1.1.4
+* Rolled back changes to `:destroy` in linter-reek.coffee
+
 ## 1.1.3
 * Closed issue \#4
 * Fully fixed all deprecated calls.
