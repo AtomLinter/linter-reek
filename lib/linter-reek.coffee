@@ -29,6 +29,6 @@ class LinterReek extends Linter
       @executablePath = atom.config.get 'linter-reek.reekExecutablePath'
 
   destroy: ->
-    atom.config.unobserve 'linter-reek.reekExecutablePath'
+    atom.config.dispose 'linter-reek.reekExecutablePath'
 
 module.exports = LinterReek
