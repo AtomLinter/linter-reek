@@ -1,3 +1,7 @@
+## 1.1.2
+* Closed issues \#2 and \#3
+* No more deprecated commands used.
+
 ## 1.1.1
 * The settings view actually works now. Hooray!
 
