@@ -1,12 +1,12 @@
 linter-reek
 =========================
 
-This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [Reek](https://github.com/troessner/reek). It will be used with files that have the “Ruby” syntax.
+This plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [Reek](https://github.com/troessner/reek). It will be used with files that have the “Ruby” syntax.
 
 ## Installation
 Linter package must be installed in order to use this plugin. If Linter is not installed, please follow the instructions [here](https://github.com/AtomLinter/Linter).
 
-### reek installation
+### Installing Reek
 Before using this plugin, you must ensure that `reek` is installed on your system. To install `reek`, do the following:
 
 1. Install [ruby](https://www.ruby-lang.org/).
@@ -18,24 +18,22 @@ Before using this plugin, you must ensure that `reek` is installed on your syste
 
 Now you can proceed to install the linter-reek plugin.
 
-### Plugin installation
+### Installing the Plugin
 ```
 $ apm install linter-reek
 ```
 
 ## Settings
-You can configure linter-reek by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
+You can configure linter-reek from its settings panel or by editing ~/.atom/config.cson (choose Open Your Config in Atom menu). The only thing that needs to be configured is the path to the `reek` executable.
 
-#### reekExecutablePath
+### Executable Path
 ```
 'linter-reek':
   'reekExecutablePath': /path/to/your/reek/here
 ```
-Run `which reek` to find the path (if you using rbenv run `rbenv which reek`).
+Run `which reek` to find the path (if you're using rbenv run `rbenv which reek`).
 
-**Note**: This plugin finds the nearest config.reek file and uses the -c command
-line argument to use that file, so you may not use the -c argument
-in the linter settings.
+**Note**: This plugin finds the nearest config.reek file and will automatically use it if it exists. If it does not, `reek` will run with its default settings.
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:
