@@ -1,13 +1,18 @@
+[![apm](https://img.shields.io/apm/dm/linter-reek.svg)](https://atom.io/packages/linter-reek) [![apm](https://img.shields.io/apm/v/linter-reek.svg)](https://atom.io/packages/linter-reek) [![apm](https://img.shields.io/apm/l/linter-reek.svg)](https://atom.io/packages/linter-reek)
+
 linter-reek
 =========================
 
-This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [Reek](https://github.com/troessner/reek). It will be used with files that have the “Ruby” syntax.
+This plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [Reek](https://github.com/troessner/reek). It will be used with files that use the Ruby syntax.
 
 ## Installation
-Linter package must be installed in order to use this plugin. If Linter is not installed, please follow the instructions [here](https://github.com/AtomLinter/Linter).
+Linter must be installed in order to use this plugin. It is a hard dependency.
+If Linter is not installed, please follow the instructions
+[here](https://github.com/AtomLinter/Linter).
 
 ### reek installation
-Before using this plugin, you must ensure that `reek` is installed on your system. To install `reek`, do the following:
+Before using this plugin, ensure that `reek` is installed on your system. To
+install `reek`, do the following:
 
 1. Install [ruby](https://www.ruby-lang.org/).
 
@@ -24,18 +29,19 @@ $ apm install linter-reek
 ```
 
 ## Settings
-You can configure linter-reek by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
+You can configure linter-reek from the setting panel or by editing ~/.atom/config.cson (choose Open Your Config in Atom's menu):
 
-#### reekExecutablePath
-```
+### Executable Path
+```json
 'linter-reek':
   'reekExecutablePath': /path/to/your/reek/here
 ```
-Run `which reek` to find the path (if you using rbenv run `rbenv which reek`).
+Run `which reek` to find the path (if you're using rbenv run `rbenv which
+reek`).
 
 **Note**: This plugin finds the nearest config.reek file and uses the -c command
-line argument to use that file, so you may not use the -c argument
-in the linter settings.
+line argument to use that file, so you don't need to worry about specifying a
+config file.
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:

@@ -1,3 +1,6 @@
+## 1.1.5
+* Corrected grammatical errors in the README.
+
 ## 1.1.4
 * Rolled back changes to `:destroy` in linter-reek.coffee
 
