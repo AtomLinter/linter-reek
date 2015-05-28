@@ -25,10 +25,11 @@ class LinterReek extends Linter
     if config
       @cmd += " -c #{config}"
 
-    atom.config.observe 'linter-reek.reekExecutablePath', =>
+    @configSubscription = atom.config.observe 'linter-reek.reekExecutablePath', =>
       @executablePath = atom.config.get 'linter-reek.reekExecutablePath'
 
   destroy: ->
-    atom.config.unobserve 'linter-reek.reekExecutablePath'
+    super
+    @configSubscription.dispose()
 
 module.exports = LinterReek
