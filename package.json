@@ -1,10 +1,6 @@
 {
   "name": "linter-reek",
   "linter-package": true,
-  "activationCommands": {
-    "atom-workspace": [],
-    "atom-text-editor": []
-  },
   "main": "./lib/init",
   "version": "1.1.5",
   "description": "Find code smells in your Ruby projects with Reek",
