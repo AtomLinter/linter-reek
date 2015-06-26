@@ -1,34 +1,26 @@
-path = require 'path'
-child_process = require 'child_process'
+process = new BufferedProcess
+            command: @executablePath
+            args: [filePath, '--json']
+            stdout: (data) ->
+              json.push data
+            exit: (code) ->
+              return resolve [] unless code is 0
+              info = try JSON.parse json.join('\n')
+              return resolve [] unless info?
+              return resolve [] if info.passed
+              resolve info.errors.map (error) ->
+                type: error.type,
+                text: error.message,
+                filePath: error.file or filePath,
+                range: [
+                  # Atom expects ranges to be 0-based
+                  [error.lineStart - 1, error.charStart - 1],
+                  [error.lineEnd - 1, error.charEnd]
+                ]
 
-module.exports = class LinterProvider
-  # A regex pattern used to extract information from the executable's output.
-  regex = ///
-  '.+?\[(\d+)]:'
-  '(.+)'
-  ///
-  getCommand = -> atom.config.get 'linter-reek.reekExecutablePath'
-  getCommandWithFile = (file) -> "#{getCommand()} #{file}"
-
-  lint: (TextEditor) ->
-    new Promise (Resolve) ->
-      file = path.basename TextEditor.getPath()
-      cwd = path.dirname TextEditor.getPath()
-      fullPath = TextEditor.getPath()
-      data = []
-      command = getCommandWithFile fullPath
-      console.log "Linter command: #{command}"
-      process = child_process.exec command, {cwd: cwd}
-      process.stderr.on 'data', (d) -> data.push d.toString()
-      process.on 'close', ->
-        toReturn = []
-        for line in data
-          if line.match regex
-            [line_number, message] = line.match(regex)[1..2]
-            toReturn.push(
-              type: 'warning'
-              text: message
-              filePath: path.join(cwd, file).normalize()
-              range: line_number
-            )
-        Resolve toReturn
+          process.onWillThrowError ({error,handle}) ->
+            atom.notifications.addError "Failed to run #{@executablePath}",
+              detail: "#{error.message}"
+              dismissable: true
+            handle()
+            resolve []
