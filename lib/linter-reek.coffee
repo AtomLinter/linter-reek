@@ -33,7 +33,7 @@ module.exports =
           data = []
           process = new BufferedProcess
             command: @reekExecutablePath
-            args: [file, '-fjson']
+            args: [file, '-f json']
             stdout: (output) ->
               data.push output
             exit: (code) ->
