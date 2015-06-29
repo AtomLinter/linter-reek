@@ -9,8 +9,7 @@ module.exports =
 
   activate: ->
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.get 'linter-reek.executablePath', (executablePath) =>
-      @executablePath = executablePath
+    @subscriptions.add atom.config.observe 'linter-reek.executablePath', (executablePath) => @executablePath = executablePath
     atom.notifications.addError(
       'Linter package not found.',
       {
@@ -18,6 +17,7 @@ module.exports =
       }
     ) unless atom.packages.getLoadedPackages 'linter'
     console.log 'Reek linter is now activated.'
+    console.log "Command path: #{@executablePath}"
 
   deactivate: ->
     @subscriptions.dispose
@@ -29,23 +29,24 @@ module.exports =
       lintOnFly: true
       lint: (TextEditor) =>
         new Promise (resolve, reject) =>
-          file = TextEditor.getPath()
+          filePath = TextEditor.getPath()
           data = []
           process = new BufferedProcess
-            command: @reekExecutablePath
-            args: [file, '-f json']
+            command: @executablePath
+            args: [filePath]
             stdout: (output) ->
+              console.log output
               data.push output
             exit: (code) ->
+              console.log "#{code}"
               return resolve [] unless code is 2
-              info = try JSON.parse data.join('\n')
-              return resolve [] unless info?
-              return resolve [] if info.passed
-              resolve info.errors.map (error) ->
+              resolve data.map (error) ->
                 type: 'warning'
-                text: "#{error.context} #{error.message} (#{error.smell_type})"
-                filePath: error.source or file
-                range: [error.lines - 1]
+                text: error.match /[^:]*$/g
+                filePath: filePath
+                range: [
+                  [error.match(/\[([0-9]+)\]/)*1 - 1 or 0]
+                ]
 
           process.onWillThrowError ({error,handle}) ->
             atom.notifications.addError "Failed to run #{@executablePath}",

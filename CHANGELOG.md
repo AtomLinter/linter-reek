@@ -1,3 +1,6 @@
+## 2.0.0
+* Updated to work with the new Linter API. It's all shiny!
+
 ## 1.1.5
 * Corrected grammatical errors in the README.
 
