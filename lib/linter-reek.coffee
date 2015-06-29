@@ -1,44 +1,56 @@
-linterPath = atom.packages.getLoadedPackage("linter").path
-Linter = require "#{linterPath}/lib/linter"
-findFile = require "#{linterPath}/lib/util"
-{CompositeDisposable} = require "atom"
+{BufferedProcess, CompositeDisposable} = require 'atom'
 
-class LinterReek extends Linter
-  # The syntax that the linter handles. May be a string or
-  # list/tuple of strings. Names should be all lowercase.
-  @syntax: ['source.ruby', 'source.ruby.rails']
+module.exports =
+  config:
+    executablePath:
+      type: 'string'
+      description: 'The path to the Reek executable. Find by running `which reek` or `rbenv which reek`'
+      default: 'reek'
 
-  # A string, list, tuple or callable that returns a string, list or tuple,
-  # containing the command line (with arguments) used to lint.
-  cmd: 'reek'
+  activate: ->
+    @subscriptions = new CompositeDisposable
+    @subscriptions.add atom.config.observe 'linter-reek.executablePath', (executablePath) => @executablePath = executablePath
+    atom.notifications.addError(
+      'Linter package not found.',
+      {
+        detail: 'Please install or enable the `linter` package in your Settings view.'
+      }
+    ) unless atom.packages.getLoadedPackages 'linter'
+    console.log 'Reek linter is now activated.'
+    console.log "Command path: #{@executablePath}"
 
-  linterName: 'Reek'
+  deactivate: ->
+    @subscriptions.dispose
 
-  # The default level for info gained from linting with this linter.
-  defaultLevel: 'warning'
+  provideLinter: ->
+    provider =
+      grammarScopes: ['source.ruby', 'source.ruby.rails', 'source.ruby.rspec']
+      scope: 'file'
+      lintOnFly: true
+      lint: (TextEditor) =>
+        new Promise (resolve, reject) =>
+          filePath = TextEditor.getPath()
+          data = []
+          process = new BufferedProcess
+            command: @executablePath
+            args: [filePath]
+            stdout: (output) ->
+              console.log output
+              data.push output
+            exit: (code) ->
+              console.log "#{code}"
+              return resolve [] unless code is 2
+              resolve data.map (error) ->
+                type: 'warning'
+                text: error.match /[^:]*$/g
+                filePath: filePath
+                range: [
+                  [error.match(/\[([0-9]+)\]/)*1 - 1 or 0]
+                ]
 
-  # A regex pattern used to extract information from the executable's output.
-  regex:
-    '.+?\\[(?<line>\\d+)\\]:' +
-    '(?<message>.+)'
-
-  constructor: (editor)->
-    super(editor)
-
-    @disposables = new CompositeDisposable
-
-    config = findFile @cwd, ['config.reek']
-    if config
-      @cmd.concat  ['-c', config]
-
-    @disposables.add atom.config.observe 'linter-reek.reekExecutablePath', @formatCommand
-
-  formatCommand: ->
-    reekExecutablePath = atom.config.get 'linter-reek.reekExecutablePath'
-    @executablePath = "#{reekExecutablePath}"
-
-  destroy: ->
-    super
-    @disposables.dispose()
-
-module.exports = LinterReek
+          process.onWillThrowError ({error,handle}) ->
+            atom.notifications.addError "Failed to run #{@executablePath}",
+            detail: "#{error.message}"
+            dismissable: true
+            handle()
+            resolve

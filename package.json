@@ -1,7 +1,6 @@
 {
   "name": "linter-reek",
-  "linter-package": true,
-  "main": "./lib/init",
+  "main": "./lib/linter-reek",
   "version": "1.1.6",
   "description": "Find code smells in your Ruby projects with Reek",
   "repository": "https://github.com/AtomLinter/linter-reek.git",
@@ -9,5 +8,11 @@
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
   },
-  "dependencies": {}
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    }
+  }
 }
