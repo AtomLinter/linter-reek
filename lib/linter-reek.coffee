@@ -1,4 +1,5 @@
 {BufferedProcess, CompositeDisposable} = require 'atom'
+OutputParser = require './output-parser'
 
 module.exports =
   config:
@@ -31,23 +32,16 @@ module.exports =
       lint: (TextEditor) =>
         new Promise (resolve, reject) =>
           filePath = TextEditor.getPath()
-          data = []
+          parsedOutput = null
           process = new BufferedProcess
             command: @executablePath
             args: [filePath]
             stdout: (output) ->
               console.log output
-              data.push output
+              parsedOutput = new OutputParser(output, filePath)
             exit: (code) ->
-              console.log "#{code}"
               return resolve [] unless code is 2
-              resolve data.map (error) ->
-                type: 'warning'
-                text: error.match /[^:]*$/g
-                filePath: filePath
-                range: [
-                  [error.match(/\[([0-9]+)\]/)*1 - 1 or 0]
-                ]
+              resolve parsedOutput.messages()
 
           process.onWillThrowError ({error,handle}) ->
             atom.notifications.addError "Failed to run #{@executablePath}",
