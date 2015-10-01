@@ -24,6 +24,7 @@ module.exports =
 
   provideLinter: ->
     provider =
+      name: 'reek'
       grammarScopes: ['source.ruby', 'source.ruby.rails', 'source.ruby.rspec']
       scope: 'file'
       lintOnFly: true
