@@ -1,5 +1,6 @@
 {BufferedProcess, CompositeDisposable} = require 'atom'
 OutputParser = require './output-parser'
+helpers = require "atom-linter"
 
 module.exports =
   config:
@@ -30,22 +31,8 @@ module.exports =
       scope: 'file'
       lintOnFly: true
       lint: (TextEditor) =>
-        new Promise (resolve, reject) =>
-          filePath = TextEditor.getPath()
-          parsedOutput = null
-          process = new BufferedProcess
-            command: @executablePath
-            args: [filePath]
-            stdout: (output) ->
-              console.log output
-              parsedOutput = new OutputParser(output, filePath)
-            exit: (code) ->
-              return resolve [] unless code is 2
-              resolve parsedOutput.messages()
-
-          process.onWillThrowError ({error,handle}) ->
-            atom.notifications.addError "Failed to run #{@executablePath}",
-            detail: "#{error.message}"
-            dismissable: true
-            handle()
-            resolve
+        filePath = TextEditor.getPath()
+        helpers.exec(@executablePath, [filePath]).then (output)->
+          console.log output
+          parsedOutput = new OutputParser(output, filePath)
+          parsedOutput.messages()
