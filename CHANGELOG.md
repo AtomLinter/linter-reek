@@ -1,3 +1,7 @@
+## 2.0.1
+
+* Added linter name
+
 ## 2.0.0
 * Updated to work with the new Linter API. It's all shiny!
 
