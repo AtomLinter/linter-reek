@@ -1,5 +1,4 @@
 {BufferedProcess, CompositeDisposable} = require 'atom'
-OutputParser = require './output-parser'
 helpers = require "atom-linter"
 
 module.exports =
@@ -24,6 +23,11 @@ module.exports =
   deactivate: ->
     @subscriptions.dispose
 
+  messages: (output, params)->
+    helpers.parse(output, '(\\[)(?<line>\\d+)(, \\d+)*\\]:(?<message>.*)', params).map (message)->
+      message.type = 'warning'
+      message
+
   provideLinter: ->
     provider =
       grammarScopes: ['source.ruby', 'source.ruby.rails', 'source.ruby.rspec']
@@ -31,7 +35,5 @@ module.exports =
       lintOnFly: true
       lint: (TextEditor) =>
         filePath = TextEditor.getPath()
-        helpers.exec(@executablePath, [filePath]).then (output)->
-          console.log output
-          parsedOutput = new OutputParser(output, filePath)
-          parsedOutput.messages()
+        helpers.exec(@executablePath, [filePath]).then (output)=>
+          @messages(output, filePath: filePath)
