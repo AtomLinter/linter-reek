@@ -9,14 +9,10 @@ module.exports =
       default: 'reek'
 
   activate: ->
+    require('atom-package-deps').install('linter-reek', true)
+      .then -> console.log 'All dependencies installed.'
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.config.observe 'linter-reek.executablePath', (executablePath) => @executablePath = executablePath
-    atom.notifications.addError(
-      'Linter package not found.',
-      {
-        detail: 'Please install or enable the `linter` package in your Settings view.'
-      }
-    ) unless atom.packages.getLoadedPackages 'linter'
     console.log 'Reek linter is now activated.'
     console.log "Command path: #{@executablePath}"
 
