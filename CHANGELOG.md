@@ -1,3 +1,7 @@
+## 2.0.2
+
+* Merged in PR \#13
+
 ## 2.0.1
 
 * Added linter name
