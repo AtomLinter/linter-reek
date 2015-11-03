@@ -1,4 +1,5 @@
 {BufferedProcess, CompositeDisposable} = require 'atom'
+helpers = require "atom-linter"
 
 module.exports =
   config:
@@ -22,6 +23,11 @@ module.exports =
   deactivate: ->
     @subscriptions.dispose
 
+  messages: (output, params)->
+    helpers.parse(output, '(\\[)(?<line>\\d+)(, \\d+)*\\]:(?<message>.*)', params).map (message)->
+      message.type = 'warning'
+      message
+
   provideLinter: ->
     provider =
       name: 'reek'
@@ -29,29 +35,6 @@ module.exports =
       scope: 'file'
       lintOnFly: true
       lint: (TextEditor) =>
-        new Promise (resolve, reject) =>
-          filePath = TextEditor.getPath()
-          data = []
-          process = new BufferedProcess
-            command: @executablePath
-            args: [filePath]
-            stdout: (output) ->
-              console.log output
-              data.push output
-            exit: (code) ->
-              console.log "#{code}"
-              return resolve [] unless code is 2
-              resolve data.map (error) ->
-                type: 'warning'
-                text: error.match /[^:]*$/g
-                filePath: filePath
-                range: [
-                  [error.match(/\[([0-9]+)\]/)*1 - 1 or 0]
-                ]
-
-          process.onWillThrowError ({error,handle}) ->
-            atom.notifications.addError "Failed to run #{@executablePath}",
-            detail: "#{error.message}"
-            dismissable: true
-            handle()
-            resolve
+        filePath = TextEditor.getPath()
+        helpers.exec(@executablePath, [filePath]).then (output)=>
+          @messages(output, filePath: filePath)
