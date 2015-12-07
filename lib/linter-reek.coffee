@@ -1,5 +1,6 @@
 {BufferedProcess, CompositeDisposable} = require 'atom'
 helpers = require "atom-linter"
+path = require "path"
 
 module.exports =
   config:
@@ -32,5 +33,5 @@ module.exports =
       lintOnFly: true
       lint: (TextEditor) =>
         filePath = TextEditor.getPath()
-        helpers.exec(@executablePath, [filePath]).then (output)=>
+        helpers.exec(@executablePath, [filePath], {cwd: path.dirname(filePath)}).then (output)=>
           @messages(output, filePath: filePath)
