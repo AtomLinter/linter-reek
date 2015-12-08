@@ -9,8 +9,8 @@
     "atom": ">=0.174.0 <2.0.0"
   },
   "dependencies": {
-    "atom-linter": "^3.2.0",
-    "atom-package-deps": "^2.0.2"
+    "atom-linter": "^3.4.0",
+    "atom-package-deps": "^3.0.6"
   },
   "package-deps": [
     "linter"
@@ -20,6 +20,44 @@
       "versions": {
         "1.1.0": "provideLinter"
       }
+    }
+  },
+  "coffeelintConfig": {
+    "max_line_length": {
+      "value": 120,
+      "level": "warn"
+    },
+    "no_empty_param_list": {
+      "level": "error"
+    },
+    "arrow_spacing": {
+      "level": "error"
+    },
+    "no_interpolation_in_single_quotes": {
+      "level": "error"
+    },
+    "no_debugger": {
+      "level": "error"
+    },
+    "prefer_english_operator": {
+      "level": "error"
+    },
+    "colon_assignment_spacing": {
+      "spacing": {
+        "left": 0,
+        "right": 1
+      },
+      "level": "error"
+    },
+    "braces_spacing": {
+      "spaces": 0,
+      "level": "error"
+    },
+    "spacing_after_comma": {
+      "level": "error"
+    },
+    "no_stand_alone_at": {
+      "level": "error"
     }
   }
 }

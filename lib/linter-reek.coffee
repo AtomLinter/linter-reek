@@ -1,5 +1,6 @@
 {BufferedProcess, CompositeDisposable} = require 'atom'
 helpers = require "atom-linter"
+path = require "path"
 
 module.exports =
   config:
@@ -9,18 +10,19 @@ module.exports =
       default: 'reek'
 
   activate: ->
-    require('atom-package-deps').install('linter-reek', true)
+    require('atom-package-deps').install()
       .then -> console.log 'All dependencies installed.'
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.observe 'linter-reek.executablePath', (executablePath) => @executablePath = executablePath
+    @subscriptions.add atom.config.observe 'linter-reek.executablePath', (executablePath) =>
+      @executablePath = executablePath
     console.log 'Reek linter is now activated.'
     console.log "Command path: #{@executablePath}"
 
   deactivate: ->
     @subscriptions.dispose
 
-  messages: (output, params)->
-    helpers.parse(output, '(\\[)(?<line>\\d+)(, \\d+)*\\]:(?<message>.*)', params).map (message)->
+  messages: (output, params) ->
+    helpers.parse(output, '(\\[)(?<line>\\d+)(, \\d+)*\\]:(?<message>.*)', params).map (message) ->
       message.type = 'warning'
       message
 
@@ -32,5 +34,5 @@ module.exports =
       lintOnFly: true
       lint: (TextEditor) =>
         filePath = TextEditor.getPath()
-        helpers.exec(@executablePath, [filePath]).then (output)=>
+        helpers.exec(@executablePath, [filePath], {cwd: path.dirname(filePath)}).then (output) =>
           @messages(output, filePath: filePath)
