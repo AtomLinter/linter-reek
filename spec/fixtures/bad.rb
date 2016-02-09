@@ -1,0 +1,2 @@
+class Dirty
+end
