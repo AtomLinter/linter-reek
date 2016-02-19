@@ -6,6 +6,6 @@ notifications:
     on_failure: change
 
 install:
-  - gem install reek
+  - gem install reek --no-document
 
 script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
