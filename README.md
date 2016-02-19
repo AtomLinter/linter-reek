@@ -1,4 +1,5 @@
 [![apm](https://img.shields.io/apm/dm/linter-reek.svg)](https://atom.io/packages/linter-reek) [![apm](https://img.shields.io/apm/v/linter-reek.svg)](https://atom.io/packages/linter-reek) [![apm](https://img.shields.io/apm/l/linter-reek.svg)](https://atom.io/packages/linter-reek)
+[![Build Status](https://travis-ci.org/AtomLinter/linter-reek.svg?branch=master)](https://travis-ci.org/AtomLinter/linter-reek)
 
 # linter-reek
 
