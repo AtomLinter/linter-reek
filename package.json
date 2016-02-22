@@ -16,7 +16,7 @@
     "coffeelint": "^1.14.2",
     "eslint": "^2.1.0",
     "babel-eslint": "^5.0.0",
-    "eslint-config-airbnb": "^6.0.1"
+    "eslint-config-airbnb": "^6.0.2"
   },
   "package-deps": [
     "linter"
