@@ -1,5 +1,8 @@
 language: objective-c
 
+rvm:
+  - 2.2.0
+
 notifications:
   email:
     on_success: never
