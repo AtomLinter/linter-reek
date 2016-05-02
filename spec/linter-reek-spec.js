@@ -2,12 +2,12 @@
 
 import * as path from 'path';
 
+const lint = require(path.join('..', 'lib', 'linter-reek')).provideLinter().lint;
+
 const goodFile = path.join(__dirname, 'fixtures', 'good.rb');
 const badFile = path.join(__dirname, 'fixtures', 'bad.rb');
 
 describe('The reek provider for Linter', () => {
-  const lint = require(path.join('..', 'lib', 'linter-reek')).provideLinter().lint;
-
   beforeEach(() => {
     atom.workspace.destroyActivePaneItem();
     waitsForPromise(() => {
