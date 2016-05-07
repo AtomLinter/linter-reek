@@ -19,7 +19,7 @@
   "devDependencies": {
     "coffeelint": "^1.15.0",
     "eslint": "^2.9.0",
-    "eslint-config-airbnb-base": "^2.0.0",
+    "eslint-config-airbnb-base": "^3.0.0",
     "eslint-plugin-import": "^1.6.1"
   },
   "package-deps": [
@@ -34,7 +34,10 @@
   },
   "eslintConfig": {
     "rules": {
-      "comma-dangle": [2, "never"],
+      "comma-dangle": [
+        2,
+        "never"
+      ],
       "no-console": 0
     },
     "extends": "airbnb-base",
