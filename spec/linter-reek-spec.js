@@ -22,7 +22,7 @@ describe('The reek provider for Linter', () => {
     let editor = null;
     beforeEach(() => {
       waitsForPromise(() =>
-        atom.workspace.open(badFile).then(openEditor => editor = openEditor)
+        atom.workspace.open(badFile).then(openEditor => (editor = openEditor))
       );
     });
 
