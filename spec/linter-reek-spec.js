@@ -41,6 +41,7 @@ describe('The reek provider for Linter', () => {
         return lint(editor).then(messages => {
           expect(messages[0].type).toBeDefined();
           expect(messages[0].type).toEqual('warning');
+          expect(messages[0].text).not.toBeDefined();
           expect(messages[0].html).toBeDefined();
           expect(messages[0].html).toEqual(messageHtml);
           expect(messages[0].filePath).toBeDefined();
