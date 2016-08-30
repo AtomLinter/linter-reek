@@ -1,14 +1,62 @@
-language: objective-c
+### Project specific config ###
 
-rvm:
-  - 2.2.0
+language: ruby
+
+matrix:
+  include:
+    - os: linux
+      rvm: 2.2.0
+      env: ATOM_CHANNEL=stable
+      before_install:
+        # Installed for linting the project
+        - nvm install node
+
+    - os: linux
+      rvm: 2.2.0
+      env: ATOM_CHANNEL=beta
+      before_install:
+        # Installed for linting the project
+        - nvm install node
+
+    - os: osx
+      rvm: 2.2.0
+      env: ATOM_CHANNEL=stable
+      before_install:
+        - brew update
+        # Installed for linting the project
+        - brew outdated node || brew upgrade node
+
+env:
+  global:
+    - ATOM_LINT_WITH_BUNDLED_NODE="false"
+
+install:
+  - gem install reek --no-document
+
+before_script:
+  - reek --version
+
+### Generic setup follows ###
+script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
 
 notifications:
   email:
     on_success: never
     on_failure: change
 
-install:
-  - gem install reek --no-document
+branches:
+  only:
+    - master
 
-script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
+git:
+  depth: 10
+
+sudo: false
+
+addons:
+  apt:
+    packages:
+    - build-essential
+    - git
+    - libgnome-keyring-dev
+    - fakeroot
