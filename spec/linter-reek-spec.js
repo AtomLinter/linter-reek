@@ -36,13 +36,14 @@ describe('The reek provider for Linter', () => {
 
     it('verifies the first message', () => {
       waitsForPromise(() => {
-        const messageText = 'IrresponsibleModule: Dirty has no descriptive comment ' +
-          '[https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md]';
+        const messageHtml = 'IrresponsibleModule: Dirty has no descriptive comment ' +
+          '[<a href=\'https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md\'>Irresponsible-Module</a>]';
         return lint(editor).then(messages => {
           expect(messages[0].type).toBeDefined();
           expect(messages[0].type).toEqual('warning');
-          expect(messages[0].text).toBeDefined();
-          expect(messages[0].text).toEqual(messageText);
+          expect(messages[0].text).not.toBeDefined();
+          expect(messages[0].html).toBeDefined();
+          expect(messages[0].html).toEqual(messageHtml);
           expect(messages[0].filePath).toBeDefined();
           expect(messages[0].filePath).toMatch(/.+bad\.rb$/);
           expect(messages[0].range).toBeDefined();

@@ -24,6 +24,10 @@ module.exports =
   messages: (output, params) ->
     helpers.parse(output, '(\\[)(?<line>\\d+)(, \\d+)*\\]:(?<message>.*)', params).map (message) ->
       message.type = 'warning'
+      pattern = /\[(https:\/\/github\.com\/troessner\/reek\/blob\/master\/docs\/)(.+)(\.md)\]/
+      messageHtml = message.text.replace(pattern, "[<a href='$1$2$3'>$2</a>]")
+      message.html = messageHtml
+      delete message['text']
       message
 
   provideLinter: ->
