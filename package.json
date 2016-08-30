@@ -6,7 +6,8 @@
   "repository": "https://github.com/AtomLinter/linter-reek.git",
   "license": "MIT",
   "engines": {
-    "atom": ">=1.0.0 <2.0.0"
+    "atom": ">=1.0.0 <2.0.0",
+    "node": ">=4.x.x"
   },
   "scripts": {
     "lint": "coffeelint lib && eslint spec",
@@ -17,6 +18,8 @@
     "atom-package-deps": "^4.0.1"
   },
   "devDependencies": {
+    "eslint-plugin-import": "^1.10.2",
+    "eslint-config-airbnb-base": "^4.0.0",
     "coffeelint": "^1.15.0",
     "eslint": "^3.4.0",
     "eslint-config-airbnb-base": "^3.0.0",
