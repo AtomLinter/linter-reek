@@ -10,12 +10,14 @@ const badFile = path.join(__dirname, 'fixtures', 'bad.rb');
 describe('The reek provider for Linter', () => {
   beforeEach(() => {
     atom.workspace.destroyActivePaneItem();
-    waitsForPromise(() => {
-      atom.packages.activatePackage('linter-reek');
-      return atom.packages.activatePackage('language-ruby').then(() =>
+    waitsForPromise(() =>
+      Promise.all([
+        atom.packages.activatePackage('linter-reek'),
+        atom.packages.activatePackage('language-ruby'),
+      ]).then(() =>
         atom.workspace.open(goodFile)
-      );
-    });
+      )
+    );
   });
 
   describe('checks a file with issues and', () => {
