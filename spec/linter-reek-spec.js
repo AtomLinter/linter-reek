@@ -2,7 +2,7 @@
 
 import * as path from 'path';
 
-const lint = require('../lib/linter-reek.coffee').provideLinter().lint;
+const lint = require('../lib/linter-reek.js').provideLinter().lint;
 
 const goodFile = path.join(__dirname, 'fixtures', 'good.rb');
 const badFile = path.join(__dirname, 'fixtures', 'bad.rb');
@@ -42,10 +42,11 @@ describe('The reek provider for Linter', () => {
       waitsForPromise(() =>
         lint(editor).then((messages) => {
           expect(messages[0].type).toEqual('Warning');
+          expect(messages[0].severity).toEqual('warning');
           expect(messages[0].text).not.toBeDefined();
           expect(messages[0].html).toEqual(messageHtml);
-          expect(messages[0].range).toEqual([[0, 0], [0, 0]]);
           expect(messages[0].filePath).toBe(badFile);
+          expect(messages[0].range).toEqual([[0, 0], [0, 11]]);
         })
       );
     });
