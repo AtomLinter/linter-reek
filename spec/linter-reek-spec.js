@@ -2,7 +2,7 @@
 
 import * as path from 'path';
 
-const lint = require(path.join('..', 'lib', 'linter-reek')).provideLinter().lint;
+const lint = require('../lib/linter-reek.coffee').provideLinter().lint;
 
 const goodFile = path.join(__dirname, 'fixtures', 'good.rb');
 const badFile = path.join(__dirname, 'fixtures', 'bad.rb');
@@ -38,7 +38,7 @@ describe('The reek provider for Linter', () => {
       waitsForPromise(() => {
         const messageHtml = 'IrresponsibleModule: Dirty has no descriptive comment ' +
           '[<a href=\'https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md\'>Irresponsible-Module</a>]';
-        return lint(editor).then(messages => {
+        return lint(editor).then((messages) => {
           expect(messages[0].type).toBeDefined();
           expect(messages[0].type).toEqual('warning');
           expect(messages[0].text).not.toBeDefined();
