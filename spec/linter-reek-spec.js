@@ -2,7 +2,7 @@
 
 import * as path from 'path';
 
-const lint = require('../lib/linter-reek.coffee').provideLinter().lint;
+const lint = require('../lib/linter-reek.js').provideLinter().lint;
 
 const goodFile = path.join(__dirname, 'fixtures', 'good.rb');
 const badFile = path.join(__dirname, 'fixtures', 'bad.rb');
@@ -10,12 +10,14 @@ const badFile = path.join(__dirname, 'fixtures', 'bad.rb');
 describe('The reek provider for Linter', () => {
   beforeEach(() => {
     atom.workspace.destroyActivePaneItem();
-    waitsForPromise(() => {
-      atom.packages.activatePackage('linter-reek');
-      return atom.packages.activatePackage('language-ruby').then(() =>
+    waitsForPromise(() =>
+      Promise.all([
+        atom.packages.activatePackage('linter-reek'),
+        atom.packages.activatePackage('language-ruby'),
+      ]).then(() =>
         atom.workspace.open(goodFile)
-      );
-    });
+      )
+    );
   });
 
   describe('checks a file with issues and', () => {
@@ -35,23 +37,18 @@ describe('The reek provider for Linter', () => {
     });
 
     it('verifies the first message', () => {
-      waitsForPromise(() => {
-        const messageHtml = 'IrresponsibleModule: Dirty has no descriptive comment ' +
-          '[<a href=\'https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md\'>Irresponsible-Module</a>]';
-        return lint(editor).then((messages) => {
-          expect(messages[0].type).toBeDefined();
-          expect(messages[0].type).toEqual('warning');
+      const messageHtml = 'IrresponsibleModule: Dirty has no descriptive comment ' +
+        '[<a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md">Irresponsible-Module</a>]';
+      waitsForPromise(() =>
+        lint(editor).then((messages) => {
+          expect(messages[0].type).toEqual('Warning');
+          expect(messages[0].severity).toEqual('warning');
           expect(messages[0].text).not.toBeDefined();
-          expect(messages[0].html).toBeDefined();
           expect(messages[0].html).toEqual(messageHtml);
-          expect(messages[0].filePath).toBeDefined();
-          expect(messages[0].filePath).toMatch(/.+bad\.rb$/);
-          expect(messages[0].range).toBeDefined();
-          expect(messages[0].range.length).toBeDefined();
-          expect(messages[0].range.length).toEqual(2);
-          expect(messages[0].range).toEqual([[0, 0], [0, 0]]);
-        });
-      });
+          expect(messages[0].filePath).toBe(badFile);
+          expect(messages[0].range).toEqual([[0, 0], [0, 11]]);
+        })
+      );
     });
   });
 
@@ -59,7 +56,7 @@ describe('The reek provider for Linter', () => {
     waitsForPromise(() =>
       atom.workspace.open(goodFile).then(editor =>
         lint(editor).then(messages =>
-          expect(messages.length).toEqual(0)
+          expect(messages.length).toBe(0)
         )
       )
     );
