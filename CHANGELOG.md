@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0
+
+*   Stop marking as on-the-fly compatible, disk contents are all that is checked
+*   Rewrite in ES2017
+*   Generate better error range highlights
+*   Fix a race condition
+
 ## 2.1.2
 
 *   Update dependencies
