@@ -15,8 +15,8 @@ describe('The reek provider for Linter', () => {
         atom.packages.activatePackage('linter-reek'),
         atom.packages.activatePackage('language-ruby'),
       ]).then(() =>
-        atom.workspace.open(goodFile)
-      )
+        atom.workspace.open(goodFile),
+      ),
     );
   });
 
@@ -24,15 +24,15 @@ describe('The reek provider for Linter', () => {
     let editor = null;
     beforeEach(() => {
       waitsForPromise(() =>
-        atom.workspace.open(badFile).then(openEditor => (editor = openEditor))
+        atom.workspace.open(badFile).then(openEditor => (editor = openEditor)),
       );
     });
 
     it('finds at least one message', () => {
       waitsForPromise(() =>
         lint(editor).then(messages =>
-          expect(messages.length).toBeGreaterThan(0)
-        )
+          expect(messages.length).toBeGreaterThan(0),
+        ),
       );
     });
 
@@ -47,7 +47,7 @@ describe('The reek provider for Linter', () => {
           expect(messages[0].html).toEqual(messageHtml);
           expect(messages[0].filePath).toBe(badFile);
           expect(messages[0].range).toEqual([[0, 0], [0, 11]]);
-        })
+        }),
       );
     });
   });
@@ -56,9 +56,9 @@ describe('The reek provider for Linter', () => {
     waitsForPromise(() =>
       atom.workspace.open(goodFile).then(editor =>
         lint(editor).then(messages =>
-          expect(messages.length).toBe(0)
-        )
-      )
+          expect(messages.length).toBe(0),
+        ),
+      ),
     );
   });
 });
