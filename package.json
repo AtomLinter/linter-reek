@@ -16,7 +16,7 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "scripts": {
-    "lint": "coffeelint lib && eslint spec",
+    "lint": "eslint .",
     "test": "apm test"
   },
   "dependencies": {
@@ -56,7 +56,6 @@
       "atom": true
     },
     "env": {
-      "es6": true,
       "node": true
     }
   }
