@@ -12,10 +12,6 @@ matrix:
       rvm: 2.2.0
       env: ATOM_CHANNEL=beta
 
-    - os: osx
-      rvm: 2.2.0
-      env: ATOM_CHANNEL=stable
-
 install:
   - gem install reek --no-document
 
