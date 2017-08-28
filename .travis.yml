@@ -5,11 +5,11 @@ language: ruby
 matrix:
   include:
     - os: linux
-      rvm: 2.2.0
+      rvm: 2.4.1
       env: ATOM_CHANNEL=stable
 
     - os: linux
-      rvm: 2.2.0
+      rvm: 2.4.1
       env: ATOM_CHANNEL=beta
 
 install:
@@ -39,10 +39,12 @@ git:
 
 sudo: false
 
+dist: trusty
+
 addons:
   apt:
     packages:
     - build-essential
-    - git
-    - libgnome-keyring-dev
     - fakeroot
+    - git
+    - libsecret-1-dev
