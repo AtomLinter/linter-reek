@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.2
+
+*   Update dependencies
+*   Activation time improvements
+
 ## 2.2.1
 
 *   Update dependencies

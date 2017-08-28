@@ -1,7 +1,7 @@
 {
   "name": "linter-reek",
   "main": "./lib/linter-reek.js",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Find code smells in your Ruby projects with Reek",
   "repository": "https://github.com/AtomLinter/linter-reek.git",
   "license": "MIT",
