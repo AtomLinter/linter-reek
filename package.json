@@ -13,7 +13,7 @@
     }
   },
   "engines": {
-    "atom": ">=1.0.0 <2.0.0"
+    "atom": ">=1.7.0 <2.0.0"
   },
   "scripts": {
     "lint": "eslint .",
@@ -40,9 +40,9 @@
     }
   },
   "eslintConfig": {
+    "extends": "airbnb-base",
     "rules": {
       "global-require": "off",
-      "no-console": "off",
       "import/no-unresolved": [
         "error",
         {
@@ -52,12 +52,12 @@
         }
       ]
     },
-    "extends": "airbnb-base",
     "globals": {
       "atom": true
     },
     "env": {
-      "node": true
+      "node": true,
+      "browser": true
     }
   }
 }
