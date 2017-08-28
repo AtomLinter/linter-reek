@@ -13,7 +13,7 @@
     }
   },
   "engines": {
-    "atom": ">=1.0.0 <2.0.0"
+    "atom": ">=1.7.0 <2.0.0"
   },
   "scripts": {
     "lint": "eslint .",
@@ -24,9 +24,10 @@
     "atom-package-deps": "^4.0.1"
   },
   "devDependencies": {
-    "eslint-config-airbnb-base": "^11.1.1",
-    "eslint": "^3.16.1",
-    "eslint-plugin-import": "^2.2.0"
+    "eslint": "^4.5.0",
+    "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-plugin-import": "^2.7.0",
+    "jasmine-fix": "^1.3.0"
   },
   "package-deps": [
     "linter"
@@ -39,9 +40,9 @@
     }
   },
   "eslintConfig": {
+    "extends": "airbnb-base",
     "rules": {
       "global-require": "off",
-      "no-console": "off",
       "import/no-unresolved": [
         "error",
         {
@@ -51,12 +52,12 @@
         }
       ]
     },
-    "extends": "airbnb-base",
     "globals": {
       "atom": true
     },
     "env": {
-      "node": true
+      "node": true,
+      "browser": true
     }
   }
 }
