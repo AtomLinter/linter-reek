@@ -4,7 +4,7 @@ import * as path from 'path';
 // eslint-disable-next-line no-unused-vars
 import { it, fit, wait, beforeEach, afterEach } from 'jasmine-fix';
 
-const lint = require('../lib/linter-reek.js').provideLinter().lint;
+const { lint } = require('../lib/linter-reek.js').provideLinter();
 
 const goodFile = path.join(__dirname, 'fixtures', 'good.rb');
 const badFile = path.join(__dirname, 'fixtures', 'bad.rb');
