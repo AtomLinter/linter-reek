@@ -54,7 +54,3 @@ Run `which reek` to find the path (if you're using rbenv run
 **Note**: This plugin finds the nearest `config.reek` file and will
 automatically use it if it exists. If it does not, `reek` will run with its
 default settings.
-
-## Donation
-
-[![Share the love!](https://techtalkers.files.wordpress.com/2012/07/buy-me-a-beer-button.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q7588UPXABV3A)
