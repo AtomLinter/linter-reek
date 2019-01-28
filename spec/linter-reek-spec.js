@@ -17,18 +17,17 @@ describe('The reek provider for Linter', () => {
   });
 
   it('checks a file with issues and reports the correct message', async () => {
-    const messageHtml = 'IrresponsibleModule: Dirty has no descriptive comment ' +
-      '[<a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md">Irresponsible-Module</a>]';
+    const excerpt = 'IrresponsibleModule: Dirty has no descriptive comment';
+    const url = 'https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md';
     const editor = await atom.workspace.open(badFile);
     const messages = await lint(editor);
 
     expect(messages.length).toBe(1);
-    expect(messages[0].type).toEqual('Warning');
     expect(messages[0].severity).toEqual('warning');
-    expect(messages[0].text).not.toBeDefined();
-    expect(messages[0].html).toEqual(messageHtml);
-    expect(messages[0].filePath).toBe(badFile);
-    expect(messages[0].range).toEqual([[0, 0], [0, 11]]);
+    expect(messages[0].url).toEqual(url);
+    expect(messages[0].excerpt).toEqual(excerpt);
+    expect(messages[0].location.file).toBe(badFile);
+    expect(messages[0].location.position).toEqual([[0, 0], [0, 11]]);
   });
 
   it('finds nothing wrong with a valid file', async () => {
