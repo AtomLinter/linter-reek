@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3.0
+
+*   Update dependencies
+*   Update to Linter API v2
+
 ## 2.2.2
 
 *   Update dependencies
