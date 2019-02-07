@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3.1
+
+*   Friendlier error for timeouts (#116)
+*   Update dependencies
+
 ## 2.3.0
 
 *   Update dependencies
