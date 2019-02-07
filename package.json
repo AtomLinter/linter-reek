@@ -1,6 +1,7 @@
 {
   "name": "linter-reek",
   "main": "./lib/linter-reek.js",
+  "private": true,
   "version": "2.3.0",
   "description": "Find code smells in your Ruby projects with Reek",
   "repository": "https://github.com/AtomLinter/linter-reek.git",
@@ -38,6 +39,19 @@
         "2.0.0": "provideLinter"
       }
     }
+  },
+  "renovate": {
+    "extends": [
+      "config:base"
+    ],
+    "semanticCommits": true,
+    "rangeStrategy": "pin",
+    "packageRules": [
+      {
+        "packagePatterns": ["^eslint"],
+        "groupName": "ESLint packages"
+      }
+    ]
   },
   "eslintConfig": {
     "extends": "airbnb-base",
