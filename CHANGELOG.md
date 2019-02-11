@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+*   Add rule description to the lint message marker tooltip (#120)
+
 ## 2.3.1
 
 *   Friendlier error for timeouts (#116)
