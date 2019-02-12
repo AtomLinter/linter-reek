@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.1
+
+*   Use Reek's JSON output (#121)
+
 ## 2.4.0
 
 *   Add rule description to the lint message marker tooltip (#120)
