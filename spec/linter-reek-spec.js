@@ -20,7 +20,7 @@ describe('The reek provider for Linter', () => {
 
   it('checks a file with issues and reports the correct message', async () => {
     const excerpt = 'IrresponsibleModule: Dirty has no descriptive comment';
-    const url = 'https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md';
+    const url = 'https://github.com/troessner/reek/blob/v5.3.1/docs/Irresponsible-Module.md';
     const editor = await atom.workspace.open(badFile);
     const messages = await lint(editor);
 
