@@ -13,6 +13,10 @@
       "default": "reek"
     }
   },
+  "activationHooks": [
+    "language-ruby:grammar-used",
+    "language-ruby-on-rails:grammar-used"
+  ],
   "engines": {
     "atom": ">=1.7.0 <2.0.0"
   },
