@@ -14,8 +14,22 @@ const badFile = path.join(__dirname, 'fixtures', 'bad.rb');
 describe('The reek provider for Linter', () => {
   beforeEach(async () => {
     atom.workspace.destroyActivePaneItem();
+
+    const activationPromise = atom.packages.activatePackage('linter-reek');
+
     await atom.packages.activatePackage('language-ruby');
-    await atom.packages.activatePackage('linter-reek');
+    await atom.workspace.open(goodFile);
+
+    atom.packages.triggerDeferredActivationHooks();
+    await activationPromise;
+  });
+
+  it('should be in the packages list', () => {
+    expect(atom.packages.isPackageLoaded('linter-reek')).toBe(true);
+  });
+
+  it('should be an active package', () => {
+    expect(atom.packages.isPackageActive('linter-reek')).toBe(true);
   });
 
   it('checks a file with issues and reports the correct message', async () => {
