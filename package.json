@@ -15,7 +15,8 @@
   },
   "activationHooks": [
     "source.ruby:root-scope-used",
-    "source.ruby.rails:root-scope-used"
+    "source.ruby.rails:root-scope-used",
+    "source.ruby.rspec:root-scope-used"
   ],
   "engines": {
     "atom": ">=1.7.0 <2.0.0"
