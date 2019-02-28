@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.2
+
+*   Use `activationHooks` to only run when Ruby files are open (#124)
+
 ## 2.4.1
 
 *   Use Reek's JSON output (#121)
